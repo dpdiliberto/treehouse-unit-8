@@ -2,8 +2,10 @@ head
   title Books
   link(href='/stylesheets/style.css' rel='stylesheet')
 h1 Books
-p
-  a.button(href='books/new') Create New Book
+.search-container
+  form(action='/books/search', method='GET')
+    input(type='text' placeholder='Search...' name='search')
+    a.button(type='submit' class='search') Submit
 table
   thead
     tr
@@ -19,3 +21,10 @@ table
         td=book.author
         td=book.genre
         td=book.year 
+p
+  - var buttonCount = Math.ceil(books.length / 10);
+  ul
+    - for (let i=1; i<=buttonCount; i++) 
+      li
+        button(type='button')=i
+  a.button(href='books/new') Create New Book

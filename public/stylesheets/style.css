@@ -25,7 +25,11 @@ a.button, input[type=submit] {
 }
 
 form a.button, input[type=submit] {
-  margin-left: 140px;
+  transition: 0.4s;
+  display: inline;
+}
+
+.search {
   transition: 0.4s;
 }
 
@@ -94,4 +98,5 @@ input[type=text] {
 
 .error {
   color: rgb(236, 15, 15);
+  font-size: 14px;
 }

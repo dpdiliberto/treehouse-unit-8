@@ -40,11 +40,13 @@ app.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
+  // Render the error page
+  // 'page_not_found' if error is 404
   if (err.status == 404) {
     res.status(404);
     res.render('page_not_found', {err});
   } else {
+    // 'error' if error is not 404
     err.message = err.message || 'Oops! Something went wrong.';
     res.status(err.status || 500);
     res.render('error', { err });
@@ -52,6 +54,7 @@ app.use(function(err, req, res, next) {
   console.log('Global error handler called: ',  err.message);
 });
 
+// Iniitialize library's book data
 (async () => {
   await db.sequelize.sync({ force: true });
   try {
@@ -82,10 +85,46 @@ app.use(function(err, req, res, next) {
         year: 1818
       }),
       db.Book.create({
+        title: "Harry Potter and the Philosopher's Stone",
+        author: 'J.K. Rowling',
+        genre: 'Fantasy',
+        year: 1997
+      }),
+      db.Book.create({
         title: 'Harry Potter and the Chamber of Secrets',
         author: 'J.K. Rowling',
         genre: 'Fantasy',
         year: 1998
+      }),
+      db.Book.create({
+        title: 'Harry Potter and the Prisoner of Azkaban',
+        author: 'J.K. Rowling',
+        genre: 'Fantasy',
+        year: 1999
+      }),
+      db.Book.create({
+        title: 'Harry Potter and the Goblet of Fire',
+        author: 'J.K. Rowling',
+        genre: 'Fantasy',
+        year: 2000
+      }),
+      db.Book.create({
+        title: 'Harry Potter and the Order of the Phoenix',
+        author: 'J.K. Rowling',
+        genre: 'Fantasy',
+        year: 2003
+      }),
+      db.Book.create({
+        title: 'Harry Potter and the Half-Blood Prince',
+        author: 'J.K. Rowling',
+        genre: 'Fantasy',
+        year: 2005
+      }),
+      db.Book.create({
+        title: 'Harry Potter and the Deathly Hallows',
+        author: 'J.K. Rowling',
+        genre: 'Fantasy',
+        year: 2007
       }),
       db.Book.create({
         title: 'Pride and Prejudice',
@@ -112,10 +151,6 @@ app.use(function(err, req, res, next) {
         year: 2001
      }),
     ]);
-
-  const booksJSON = booksInstances.map(book => book.toJSON());
-  console.log(booksInstances);
-
   } catch (error) {
     console.error('Unable to connect to the database:', error);
   }
