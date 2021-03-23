@@ -1,5 +1,29 @@
-extends layout
+extends layout 
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .search-container
+    form(action='/books/search', method='GET')
+      input(type='text' placeholder='Search...' name='search')
+      a.button(type='submit' class='search') Submit
+  table
+    thead
+      tr
+        th Title
+        th Author
+        th Genre
+        th Year
+    tbody
+      each book in books
+        tr
+          td
+            a(href=`/books/${book.id}`)=book.title
+          td=book.author
+          td=book.genre
+          td=book.year 
+  p
+    - var buttonCount = Math.ceil(books.length / 10);
+    ul
+      - for (let i=1; i<=buttonCount; i++) 
+        li
+          button(type='button')=i
+    a.button(href='books/new') Create New Book

@@ -1,0 +1,9 @@
+extends layout 
+
+block content
+  form(action='/books', method='post')
+    include book-form
+    p
+      input(type='submit' value='Create New Book')
+    p
+      a.button(href='/') Cancel

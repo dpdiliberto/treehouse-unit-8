@@ -44,7 +44,7 @@ app.use(function(err, req, res, next) {
   // 'page_not_found' if error is 404
   if (err.status == 404) {
     res.status(404);
-    res.render('page_not_found', {err});
+    res.render('page-not-found', {title: err.message});
   } else {
     // 'error' if error is not 404
     err.message = err.message || 'Oops! Something went wrong.';
