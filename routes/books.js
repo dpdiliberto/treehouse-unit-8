@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../models');
+const { Op } = require('sequelize');
 const sequelize = require('sequelize');
 const Book = db.Book;
 
@@ -28,7 +29,6 @@ function notFound() {
 /* Get book listing, with all books listed in ascending order based on title. */
 router.get('/', asyncHandler(async (req, res) => {
   const books = await Book.findAll({ order: [["title", "ASC"]] } );
-  console.log(books);
   res.render('index', {books: books, title: 'Library Book List'});
 }));
 
@@ -57,7 +57,7 @@ router.post('/', asyncHandler(async (req, res) => {
 
 /* Get request based on search query */
 router.get('/search', asyncHandler(async (req, res) => {
-  const searchQuery = req.query.search.toLowerCase();
+  const searchQuery = req.query.query.toLowerCase();
   /* Compares lower case query with lower case book title entry */
   const books = await Book.findAll({
     where: {
@@ -66,7 +66,7 @@ router.get('/search', asyncHandler(async (req, res) => {
     order: [["title", "ASC"]] 
   });
   console.log(books);
-  res.render('books', {books: books, title: 'Library Book List'});
+  res.render('index', {books: books, title: 'Library Book List'});
 }));
 
 /* Edit book form */

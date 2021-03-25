@@ -2,9 +2,15 @@ extends layout
 
 block content
   .search-container
-    form(action='/books/search', method='GET')
-      input(type='text' placeholder='Search...' name='search')
-      a.button(type='submit' class='search') Submit
+    p(style='padding-top:9px')
+      a.button(href='books/new') Add Book
+    form(action=`/books/search`, method='GET')
+      p(style='float:left; padding-left: 70px')
+        input(type='text' name='query')
+      p(style='float:left;')
+        input(type='submit' class='search' value='Search')
+        a.button(href='/' class='cancel') X
+
   table
     thead
       tr
@@ -19,11 +25,12 @@ block content
             a(href=`/books/${book.id}`)=book.title
           td=book.author
           td=book.genre
-          td=book.year 
-  p
-    - var buttonCount = Math.ceil(books.length / 10);
-    ul
-      - for (let i=1; i<=buttonCount; i++) 
-        li
-          button(type='button')=i
-    a.button(href='books/new') Create New Book
+          td=book.year
+  //- 
+    p(class='pagination')
+      - var buttonCount = Math.ceil(allBooks.length / 10);
+      form(action=`/books/pages`, method='GET')
+      ul
+        - for (let i=1; i<=buttonCount; i++) 
+          li(style='float:left;')
+            a.button(type='button' href=`/page_${i}`)=i
