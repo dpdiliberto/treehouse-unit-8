@@ -47,7 +47,6 @@ router.post('/', asyncHandler(async (req, res) => {
     // If an error is a Sequelize validation error, then show that validation message
     if (error.name === 'SequelizeValidationError') {
       book = await Book.build(req.body);
-      console.log(book);
       res.render('new-book', { book, errors: error.errors, title: 'Add a New Book'} );
     } else {
       throw error;
@@ -65,7 +64,6 @@ router.get('/search', asyncHandler(async (req, res) => {
     },
     order: [["title", "ASC"]] 
   });
-  console.log(books);
   res.render('index', {books: books, title: 'Library Book List'});
 }));
 
